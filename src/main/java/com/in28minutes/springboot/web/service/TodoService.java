@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.beeinstant.metrics.Metrics;
+import com.beeinstant.metrics.MetricsManager;
+import com.beeinstant.metrics.TimerMetric;
 import org.springframework.stereotype.Service;
 
 import com.in28minutes.springboot.web.model.Todo;
@@ -13,6 +16,7 @@ import com.in28minutes.springboot.web.model.Todo;
 public class TodoService {
     private static List<Todo> todos = new ArrayList<Todo>();
     private static int todoCount = 3;
+    private final Metrics metricsLogger = MetricsManager.getMetricsLogger("service=TodoService");
 
     static {
         todos.add(new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(),
@@ -23,21 +27,25 @@ public class TodoService {
     }
 
     public List<Todo> retrieveTodos(String user) {
+        TimerMetric timer = metricsLogger.startTimer("retrieveAllToDos");
         List<Todo> filteredTodos = new ArrayList<Todo>();
         for (Todo todo : todos) {
             if (todo.getUser().equalsIgnoreCase(user)) {
                 filteredTodos.add(todo);
             }
         }
+        timer.close();
         return filteredTodos;
     }
 
     public Todo retrieveTodo(int id) {
+        TimerMetric timer = metricsLogger.startTimer("retrieveSingleTodo");
         for (Todo todo : todos) {
             if (todo.getId() == id) {
                 return todo;
             }
         }
+        timer.close();
         return null;
     }
 
