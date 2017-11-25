@@ -24,7 +24,7 @@ public class LoginSeleniumTest {
     }
 
     @Test
-    public void testUntitledTestCase() throws Exception {
+    public void testLogin() throws Exception {
         Random rn = new Random();
          List<String> usernames = Arrays.asList("in28Minutes", "in29Minutes");
         for (int i = 0; i < 20; i++) {
