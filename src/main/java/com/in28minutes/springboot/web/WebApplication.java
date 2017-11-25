@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 public class WebApplication {
 
     public static void main(String[] args) {
-        MetricsManager.init("beeInstantDemo");
+        MetricsManager.init("TodoWebApp");
         ApplicationContext ctx = SpringApplication.run(WebApplication.class, args);
     }
 }
