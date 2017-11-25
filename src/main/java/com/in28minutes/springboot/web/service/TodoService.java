@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.beeinstant.metrics.Metrics;
+import com.beeinstant.metrics.MetricsLogger;
 import com.beeinstant.metrics.MetricsManager;
 import com.beeinstant.metrics.TimerMetric;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import com.in28minutes.springboot.web.model.Todo;
 public class TodoService {
     private static List<Todo> todos = new ArrayList<Todo>();
     private static int todoCount = 3;
-    private final Metrics metricsLogger = MetricsManager.getMetricsLogger("api=TodoService");
+    private final MetricsLogger metricsLogger = MetricsManager.getMetricsLogger("api=TodoService");
 
     static {
         todos.add(new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(),
@@ -27,7 +28,7 @@ public class TodoService {
     }
 
     public List<Todo> retrieveTodos(String user) {
-        try (TimerMetric timer = metricsLogger.startTimer("retrieveAllToDos")) {
+        try (TimerMetric timer = metricsLogger.extendDimensions("method=retrieveAllToDos").startTimer("Timing")) {
             List<Todo> filteredTodos = new ArrayList<Todo>();
             for (Todo todo : todos) {
                 if (todo.getUser().equalsIgnoreCase(user)) {
@@ -39,7 +40,7 @@ public class TodoService {
     }
 
     public Todo retrieveTodo(int id) {
-        try (TimerMetric timer = metricsLogger.startTimer("retrieveSingleTodo")) {
+        try (TimerMetric timer = metricsLogger.extendDimensions("method=retrieveSingleTodo").startTimer("Timing")) {
             for (Todo todo : todos) {
                 if (todo.getId() == id) {
                     return todo;
