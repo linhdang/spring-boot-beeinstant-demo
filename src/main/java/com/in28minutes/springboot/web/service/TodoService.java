@@ -16,7 +16,7 @@ import com.in28minutes.springboot.web.model.Todo;
 public class TodoService {
     private static List<Todo> todos = new ArrayList<Todo>();
     private static int todoCount = 3;
-    private final Metrics metricsLogger = MetricsManager.getMetricsLogger("service=TodoService");
+    private final Metrics metricsLogger = MetricsManager.getMetricsLogger("api=TodoService");
 
     static {
         todos.add(new Todo(1, "in28Minutes", "Learn Spring MVC", new Date(),

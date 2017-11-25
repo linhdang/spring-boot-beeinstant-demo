@@ -13,7 +13,7 @@ import java.util.Collection;
 
 @Component
 public class LoginService implements UserDetailsService {
-    private static final MetricsLogger metricsLogger = MetricsManager.getMetricsLogger("service=LoginService");
+    private static final MetricsLogger metricsLogger = MetricsManager.getMetricsLogger("api=LoginService");
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
