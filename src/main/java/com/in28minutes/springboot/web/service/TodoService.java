@@ -27,26 +27,26 @@ public class TodoService {
     }
 
     public List<Todo> retrieveTodos(String user) {
-        TimerMetric timer = metricsLogger.startTimer("retrieveAllToDos");
-        List<Todo> filteredTodos = new ArrayList<Todo>();
-        for (Todo todo : todos) {
-            if (todo.getUser().equalsIgnoreCase(user)) {
-                filteredTodos.add(todo);
+        try (TimerMetric timer = metricsLogger.startTimer("retrieveAllToDos")) {
+            List<Todo> filteredTodos = new ArrayList<Todo>();
+            for (Todo todo : todos) {
+                if (todo.getUser().equalsIgnoreCase(user)) {
+                    filteredTodos.add(todo);
+                }
             }
+            return filteredTodos;
         }
-        timer.close();
-        return filteredTodos;
     }
 
     public Todo retrieveTodo(int id) {
-        TimerMetric timer = metricsLogger.startTimer("retrieveSingleTodo");
-        for (Todo todo : todos) {
-            if (todo.getId() == id) {
-                return todo;
+        try (TimerMetric timer = metricsLogger.startTimer("retrieveSingleTodo")) {
+            for (Todo todo : todos) {
+                if (todo.getId() == id) {
+                    return todo;
+                }
             }
+            return null;
         }
-        timer.close();
-        return null;
     }
 
     public void updateTodo(Todo todo) {
