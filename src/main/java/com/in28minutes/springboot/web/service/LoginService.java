@@ -13,12 +13,12 @@ import java.util.Collection;
 
 @Component
 public class LoginService implements UserDetailsService {
-    private static final MetricsLogger metricsLogger = MetricsManager.getMetricsLogger("api=LoginService");
+    private static final MetricsLogger metricsLogger = MetricsManager.getMetricsLogger("class=LoginService");
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username.equals("in28Minutes")) {
-            metricsLogger.incCounter("loginSucceed", 1);
+            metricsLogger.incCounter("LoginSucceed", 1);
             return new UserDetails() {
 
                 @Override
@@ -57,7 +57,7 @@ public class LoginService implements UserDetailsService {
                 }
             };
         }
-        metricsLogger.incCounter("loginFailed", 1);
+        metricsLogger.incCounter("LoginFailed", 1);
         return null;
     }
 }
